@@ -6,6 +6,7 @@ let globalData = [];
 let scoreKey = "";
 
 
+// ===== FILE UPLOAD =====
 input.addEventListener("change", async () => {
 
     const form = new FormData();
@@ -27,9 +28,9 @@ input.addEventListener("change", async () => {
 
     // ===== KPI CARDS =====
     document.getElementById("students").innerHTML = `Students<br><b>${scores.length}</b>`;
-    document.getElementById("avg").innerHTML = `Avg<br><b>${avg(scores)}</b>`;
-    document.getElementById("max").innerHTML = `Max<br><b>${Math.max(...scores)}</b>`;
-    document.getElementById("min").innerHTML = `Min<br><b>${Math.min(...scores)}</b>`;
+    document.getElementById("avg").innerHTML = `Average<br><b>${avg(scores)}</b>`;
+    document.getElementById("max").innerHTML = `Highest<br><b>${Math.max(...scores)}</b>`;
+    document.getElementById("min").innerHTML = `Lowest<br><b>${Math.min(...scores)}</b>`;
 
     // ===== CHART =====
     new Chart(document.getElementById("chart"), {
@@ -47,7 +48,7 @@ input.addEventListener("change", async () => {
 });
 
 
-// ===== TABLE RENDER WITH COLOR =====
+// ===== TABLE WITH COLOR GRADING =====
 function renderTable(data) {
 
     table.innerHTML = "";
@@ -76,7 +77,7 @@ function renderTable(data) {
 }
 
 
-// ===== SEARCH =====
+// ===== SEARCH FILTER =====
 searchInput.addEventListener("keyup", () => {
 
     const value = searchInput.value.toLowerCase();
@@ -89,7 +90,7 @@ searchInput.addEventListener("keyup", () => {
 });
 
 
-// ===== UTILS =====
+// ===== UTILITY =====
 function avg(arr) {
     return (arr.reduce((a,b)=>a+b,0)/arr.length).toFixed(2);
 }
