@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, "public")));
 const upload = multer({ dest: "uploads/" });
 
 
-// ✅ CLEAN TEXT FUNCTION (fix weird characters)
+// ===== CLEAN TEXT (fix weird characters) =====
 function cleanText(text) {
     if (!text) return "";
 
@@ -25,14 +25,14 @@ function cleanText(text) {
 }
 
 
-// ✅ FILE UPLOAD API
+// ===== UPLOAD API =====
 app.post("/upload", upload.single("file"), (req, res) => {
 
     const workbook = xlsx.readFile(req.file.path);
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     let data = xlsx.utils.sheet_to_json(sheet);
 
-    // clean every string cell
+    // clean all strings
     data = data.map(row => {
         for (let key in row) {
             if (typeof row[key] === "string") {
@@ -42,13 +42,12 @@ app.post("/upload", upload.single("file"), (req, res) => {
         return row;
     });
 
-    // optional: delete uploaded temp file
-    fs.unlinkSync(req.file.path);
+    fs.unlinkSync(req.file.path); // delete temp file
 
     res.json(data);
 });
 
 
 app.listen(3000, () =>
-    console.log("🚀 Running → http://localhost:3000")
+    console.log("🚀 Server running at http://localhost:3000")
 );
